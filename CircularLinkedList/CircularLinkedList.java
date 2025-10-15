@@ -6,6 +6,7 @@ public class CircularLinkedList {
     public int size=0;
     public Node head = null;
     public Node tail = null;
+
     //print the list
     public void print(){
         System.out.println("The List So Far: ");
@@ -51,12 +52,14 @@ public class CircularLinkedList {
         }
     }
 
+    // rotate elements, round-robin style
     public void rotateElement() {
         System.out.println("Rotating!");
         tail = head;
         head = head.next;
     }
 
+    //delete tail node
     public void deleteNodeFromTail() {
         System.out.println("\nDeleting Note " + tail.element + "from Tail");
         if(tail.next == tail) { 
@@ -71,6 +74,7 @@ public class CircularLinkedList {
         size--;
     }
 
+    //delete node from head
     public void deleteNodeFromHead() {
         head = head.next;
         tail.next = head;
