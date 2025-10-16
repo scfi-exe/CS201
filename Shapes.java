@@ -1,6 +1,5 @@
 
 //abstract class
-import java.io.*;
 
 abstract class Shapes {
     // declaring abstract methods
