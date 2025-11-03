@@ -1,6 +1,9 @@
 package CH11BST.BinaryTree;
 
 import java.util.Scanner;
+// Name: Scott Brandon Finkelstein
+// Course: CS 201 - Data Structures and Algorithms
+// Description: This program allows a user to build, insert, delete, and traverse a BST
 
 public class Main {
     // Class Node with the data and the child nodes
@@ -89,6 +92,41 @@ public class Main {
             insert(data[i]);
     }
 
+    static Node getSuccessor(Node curr) {
+        curr = curr.rightChild;
+        while (curr != null && curr.leftChild != null) {
+            curr = curr.leftChild;
+        }
+        return curr;
+    }
+
+    public void deleteNode(int x) {
+        root = deleteNode(root, x);
+    }
+
+    // Delete a node with value, x, from the BST
+    static Node deleteNode(Node root, int x) {
+        if (root == null)
+            return root;
+        if (root.data > x) {
+            root.leftChild = deleteNode(root.leftChild, x);
+        } else if (root.data < x) {
+            root.rightChild = deleteNode(root.rightChild, x);
+        } else {
+            // node with 0 or 1 child
+            if (root.leftChild == null)
+                return root.rightChild;
+            if (root.rightChild == null)
+                return root.leftChild;
+
+            // Node with 2 children
+            Node succ = getSuccessor(root);
+            root.data = succ.data;
+            root.rightChild = deleteNode(root.rightChild, succ.data);
+        }
+        return root;
+    }
+
     // interfaces with the true printInOrder method below
     public void printInOrder() {
         printInOrder(root);
@@ -125,10 +163,12 @@ public class Main {
         printPreOrder(node.rightChild);
     }
 
+    // interfaces with the printPostOrder method below
     public void printPostOrder() {
         printPostOrder(root);
     }
 
+    // prints a post-order traversal of the BST
     public void printPostOrder(Node node) {
         if (node == null) {
             return;
@@ -173,6 +213,13 @@ public class Main {
                 binaryTree.insert(scanner.nextInt());
             }
 
+            else if (userInput == 3) {
+                System.out.print("Enter a number to remove from the tree: ");
+                int val = scanner.nextInt();
+                binaryTree.deleteNode(val);
+
+            }
+
             else if (userInput == 4) {
                 binaryTree.printInOrder();
             }
@@ -201,3 +248,4 @@ public class Main {
 // https://study.com/academy/lesson/practical-application-for-data-structures-search-trees.html
 // https://study.com/academy/lesson/binary-trees-applications-implementation.html
 // https://study.com/academy/lesson/binary-search-trees-definition-uses.html
+// https://www.geeksforgeeks.org/dsa/deletion-in-binary-search-tree/
