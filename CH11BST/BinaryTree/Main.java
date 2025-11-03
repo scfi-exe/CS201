@@ -41,7 +41,7 @@ public class Main {
         }
         if (key <= node.data) {
             node.leftChild = insertNode(node.leftChild, key);
-        } else if (key > root.data) {
+        } else if (key > node.data) {
             node.rightChild = insertNode(node.rightChild, key);
         }
         return node;
@@ -86,14 +86,15 @@ public class Main {
         clear();
         int[] data = {4, 2, 6, 1, 3, 5, 7};
         for (int i = 0; i < data.length; i++)
-            insert(i);
+            insert(data[i]);
     }
 
-    // prints an in-order traversal of the BST
+    // interfaces with the true printInOrder method below
     public void printInOrder() {
         printInOrder(root);
     }
 
+    // prints an in-order traversal of the BST
     public void printInOrder(Node node) {
         if (node == null) {
             return;
@@ -106,10 +107,44 @@ public class Main {
         printInOrder(node.rightChild);
     }
 
+    // interfaces with the true printPreOrder method below
+    public void printPreOrder() {
+        printPreOrder(root);
+    }
+
+    // prints a pre-order traversal of the BST
+    public void printPreOrder(Node node) {
+        if (node == null) {
+            return;
+        }
+        // visit node
+        System.out.print(node.data + " ");
+        // traverse left subtree
+        printPreOrder(node.leftChild);
+        // traverse right subtree
+        printPreOrder(node.rightChild);
+    }
+
+    public void printPostOrder() {
+        printPostOrder(root);
+    }
+
+    public void printPostOrder(Node node) {
+        if (node == null) {
+            return;
+        }
+        // traverse lefte subtree
+        printPostOrder(node.leftChild);
+        // traverse right subtree
+        printPostOrder(node.rightChild);
+        // visit node
+        System.out.print(node.data + " ");
+    }
+
     // method to print the menu options for the user interface
     private static void printMenu() {
         System.out.println("\n===== BST MENU =====");
-        System.out.println("1) Create a binary search tree");
+        System.out.println("1) Create a preset binary search tree with nodes 1 through 7");
         System.out.println("2) Add a node");
         System.out.println("3) Delete a node");
         System.out.println("4) Print nodes by InOrder");
@@ -133,18 +168,36 @@ public class Main {
                 binaryTree.buildPreset();
             }
 
+            else if (userInput == 2) {
+                System.out.print("Enter a number to insert into the tree: ");
+                binaryTree.insert(scanner.nextInt());
+            }
+
             else if (userInput == 4) {
                 binaryTree.printInOrder();
+            }
+
+            else if (userInput == 5) {
+                binaryTree.printPreOrder();
+            }
+
+            else if (userInput == 6) {
+                binaryTree.printPostOrder();
             }
 
             else if (userInput == 7) {
                 System.out.println("Exiting program...");
                 running = false;
+            } else {
+                System.out.print("Invalid input - try again!");
             }
         }
         scanner.close();
     }
 }
 
-// source:
+// sources used:
 // https://www.geeksforgeeks.org/dsa/binary-search-tree-traversal-inorder-preorder-post-order/
+// https://study.com/academy/lesson/practical-application-for-data-structures-search-trees.html
+// https://study.com/academy/lesson/binary-trees-applications-implementation.html
+// https://study.com/academy/lesson/binary-search-trees-definition-uses.html
